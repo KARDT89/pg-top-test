@@ -1,20 +1,15 @@
-import express from "express";
+import express, { urlencoded } from "express";
+import userRouter from "./routes/user.route.js";
 
 const app = new express();
 
 app.use(express.static('public'))
+app.use(express.urlencoded())
 
-app.get("/", (req, res) => {
-    console.log("usernames will be logged here - wip");
-});
+app.set("views", "./views");
+app.set("view engine", "ejs");
 
-app.get("/new", (req, res) => {
-    res.render("index.html");
-});
-
-app.post("/new", (req, res) => {
-    console.log("username to be saved: ", req.body.username);
-});
+app.use("/", userRouter);
 
 app.listen(3000, (error) => {
     if (error) {
